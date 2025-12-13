@@ -1,14 +1,27 @@
 <!-- templates/login.html -->
 {% extends "base.html" %} {% block page_title %}Login{% endblock %} {% block
-page_subtitle %}Masuk dengan email untuk mulai kuis dan naikkan skor.{% endblock
-%} {% block content %}
+page_subtitle %}Masuk dengan email atau username untuk mulai kuis dan naikkan
+skor.{% endblock %} {% block content %}
 <div class="card">
   <form method="post">
-    <label>Email</label>
-    <input type="text" name="email" required />
+    <label>Email/Username</label>
+    <input
+      type="text"
+      name="email_or_username"
+      placeholder="Masukkan email atau username"
+      required
+    />
+    <small style="color: #888; font-size: 12px">
+      💡 Usernames are case sensitive. Remember this when logging in!
+    </small>
 
-    <label>Password</label>
-    <input type="password" name="password" required />
+    <label style="margin-top: 12px">Password</label>
+    <input
+      type="password"
+      name="password"
+      placeholder="Masukkan password Anda"
+      required
+    />
 
     <div style="height: 12px"></div>
     <button class="btn btn-primary" type="submit">Masuk</button>
