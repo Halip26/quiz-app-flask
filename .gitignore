@@ -42,6 +42,7 @@ databases/
 .env
 *.rar
 *.7z
+*.zip
 
 # Editor/IDE
 .vscode/
