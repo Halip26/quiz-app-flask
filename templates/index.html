@@ -1,0 +1,120 @@
+<!-- local css -->
+<link rel="stylesheet" href="../static/css/style.css" />
+
+<!-- templates/index.html -->
+{% extends "base.html" %} {% block content %}
+<h2>Cuaca dalam 3 Hari</h2>
+<form method="post">
+  <label>Nama kota</label>
+  <div
+    style="display: flex; gap: 10px; align-items: center; margin-bottom: 50px"
+  >
+    <input
+      type="text"
+      name="city"
+      placeholder="Masukkan nama kota, Contoh: Makassar atau Jakarta"
+      value="{{ city or '' }}"
+      required
+    />
+    <button class="btn btn-primary" type="submit">Lihat</button>
+  </div>
+</form>
+<!-- Materi Etika AI (baru) -->
+<div class="card reading">
+  <h3 class="reading-title">Etika di dalam AI</h3>
+  <p class="reading-intro">
+    Bagian ini membantu memahami dampak AI terhadap keadilan, privasi, dan
+    tanggung jawab saat membuat aplikasi berbasis AI.
+  </p>
+
+  <div class="reading-grid">
+    <div class="reading-block">
+      <h4>Prinsip Inti</h4>
+      <ul class="reading-list">
+        <li>
+          Keadilan: kurangi bias pada data dan model agar hasil tidak merugikan
+          kelompok tertentu.
+        </li>
+        <li>
+          Privasi: lindungi data pribadi, minimalkan data yang dikumpulkan, dan
+          enkripsi bila perlu.
+        </li>
+        <li>
+          Transparansi: jelaskan apa yang dilakukan model dan batasannya secara
+          jujur.
+        </li>
+        <li>
+          Akuntabilitas: tetapkan penanggung jawab bila sistem salah atau
+          disalahgunakan.
+        </li>
+        <li>
+          Keamanan: uji terhadap serangan dan kesalahan agar sistem tetap andal.
+        </li>
+      </ul>
+    </div>
+
+    <div class="reading-block">
+      <h4>Praktik Baik di Proyek</h4>
+      <ul class="reading-list">
+        <li>
+          Labelkan konten AI (misalnya “Hasil dari model”) agar pengguna paham
+          konteks.
+        </li>
+        <li>
+          Uji dataset ringkas untuk bias sederhana sebelum dipakai produksi.
+        </li>
+        <li>Log prediksi penting secara anonim untuk audit dan perbaikan.</li>
+        <li>
+          Sertakan peringatan batasan model pada UI (misalnya tingkat akurasi
+          atau domain data).
+        </li>
+        <li>
+          Sediakan kanal umpan balik jika pengguna menemukan hasil tidak adil
+          atau error.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <details class="reading-acc">
+    <summary>AI Ethics 101 (Ringkas)</summary>
+    <div class="reading-acc-body">
+      <p>
+        Etika AI berfokus pada pembangunan sistem yang bermanfaat tanpa
+        menimbulkan kerugian tak sengaja melalui bias, kebocoran data, atau
+        keputusan otomatis yang tidak bisa dijelaskan.
+      </p>
+      <p>
+        Di konteks kuis dan aplikasi edukasi, etika berarti jujur pada kemampuan
+        sistem, menjaga privasi skor pengguna, dan tidak memanipulasi perilaku
+        pengguna dengan desain yang menyesatkan.
+      </p>
+    </div>
+  </details>
+</div>
+
+{% if weather %}
+<div style="height: 14px"></div>
+<div class="card">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Hari</th>
+        <th>Tanggal</th>
+        <th>Suhu Siang (°C)</th>
+        <th>Suhu Malam (°C)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in weather %}
+      <tr>
+        <td>{{ row.day }}</td>
+        <td>{{ row.date }}</td>
+        <td>{{ row.day_temp }}</td>
+        <td>{{ row.night_temp }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %} {% endblock %}

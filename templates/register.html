@@ -1,0 +1,26 @@
+<!-- local css -->
+<link rel="stylesheet" href="../static/css/style.css" />
+<!-- templates/register.html -->
+{% extends "base.html" %} {% block page_title %}Daftar Akun{% endblock %} {%
+block page_subtitle %}Gunakan email dan username unik untuk menyimpan skor
+Anda.{% endblock %} {% block content %}
+<div class="card">
+  <form method="post">
+    <label>Email (unik)</label>
+    <input type="text" name="email" required />
+
+    <label>Username (unik)</label>
+    <input type="text" name="username" required />
+
+    <label>Password</label>
+    <input type="password" name="password" required />
+
+    <label>Konfirmasi Password</label>
+    <input type="password" name="confirm" required />
+
+    <div style="height: 12px"></div>
+    <button class="btn btn-primary" type="submit">Buat Akun</button>
+    <a class="btn btn-ghost" href="{{ url_for('login') }}">Sudah punya akun?</a>
+  </form>
+</div>
+{% endblock %}

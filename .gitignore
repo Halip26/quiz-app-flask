@@ -1,0 +1,76 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# MyPy / cache
+.mypy_cache/
+
+# IPython / Jupyter
+.ipynb_checkpoints/
+
+# Flask / instance / database files
+instances/
+databases/
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables
+.env
+.env.*
+*.rar
+*.7z
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and local files
+*.log
+*.pot
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Misc
+api.py
+*.json
+*.sql
+*.db
+
+# Coverage / test outputs
+coverage/
+nosetests.xml
+
+# Wheel / build artifacts
+wheelhouse/

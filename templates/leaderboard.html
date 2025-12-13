@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block content %}
+<div class="lb-container">
+  <h2 class="lb-title">Papan Peringkat</h2>
+
+  {% if users %} {# pastikan tidak membagi dengan nol #} {% set max_score =
+  users|map(attribute='total_score')|max or 1 %}
+
+  <ul class="leaderboard">
+    {% for u in users %}
+    <li class="item {% if loop.index0 < 3 %}top{% endif %}">
+      <div class="rank">
+        {% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% elif loop.index
+        == 3 %}🥉{% else %}{{ loop.index }}{% endif %}
+      </div>
+
+      <div class="avatar">{{ u.username[0]|upper }}</div>
+
+      <div class="info">
+        <div class="name">{{ u.username }}</div>
+        <div class="bar" aria-hidden="true">
+          <div
+            class="fill"
+            style="width: {{ ((u.total_score / max_score) * 100)|round(0) }}%"
+          ></div>
+        </div>
+      </div>
+
+      <div class="score">{{ u.total_score }}</div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% else %}
+  <p>Tidak ada data pengguna.</p>
+  {% endif %}
+</div>
+{% endblock %}
