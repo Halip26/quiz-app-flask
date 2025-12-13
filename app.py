@@ -30,7 +30,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 MAX_QUESTIONS = 20
 OWM_API_KEY = os.getenv("OWM_API_KEY")
 OWM_GEOCODE_URL = "https://api.openweathermap.org/geo/1.0/direct"
-OWM_ONECALL_URL = "https://api.openweathermap.org/data/3.0/onecall"
+OWM_FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -39,7 +39,7 @@ login_manager.login_view = "login"
 ID_DAYS = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
 
 
-# Models
+# models
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
@@ -101,55 +101,89 @@ def pick_random_question_excluding(ids):
 
 
 # Weather helpers
-def dayname_from_utc(ts_utc, tz_offset_seconds):
-    dt_local = datetime.utcfromtimestamp(ts_utc) + timedelta(seconds=tz_offset_seconds)
-    return ID_DAYS[dt_local.weekday()], dt_local.strftime("%Y-%m-%d")
-
-
 def get_weather(city_name):
     if not OWM_API_KEY or not city_name:
         return None
 
-    # Geocoding
-    geo_params = {"q": city_name, "limit": 1, "appid": OWM_API_KEY}
-    g = requests.get(OWM_GEOCODE_URL, params=geo_params, timeout=10)
-    if g.status_code != 200:
-        return None
-    results = g.json()
-    if not results:
-        return None
-    lat = results[0]["lat"]
-    lon = results[0]["lon"]
+    try:
+        # Geocoding
+        geo_params = {"q": city_name, "limit": 1, "appid": OWM_API_KEY}
+        g = requests.get(OWM_GEOCODE_URL, params=geo_params, timeout=10)
+        if g.status_code != 200:
+            print(f"Geocoding error: {g.status_code} - {g.text}")
+            return None
+        results = g.json()
+        if not results:
+            print("City not found in geocoding")
+            return None
+        lat = results[0]["lat"]
+        lon = results[0]["lon"]
 
-    # One Call 3.0
-    oc_params = {
-        "lat": lat,
-        "lon": lon,
-        "exclude": "minutely,hourly,alerts",
-        "units": "metric",
-        "appid": OWM_API_KEY,
-    }
-    r = requests.get(OWM_ONECALL_URL, params=oc_params, timeout=10)
-    if r.status_code != 200:
-        return None
-    data = r.json()
-    tz_offset = data.get("timezone_offset", 0)
-    daily = data.get("daily", [])[:3]
+        forecast_params = {
+            "lat": lat,
+            "lon": lon,
+            "units": "metric",
+            "appid": OWM_API_KEY,
+        }
+        r = requests.get(OWM_FORECAST_URL, params=forecast_params, timeout=10)
+        if r.status_code != 200:
+            print(f"Forecast error: {r.status_code} - {r.text}")
+            return None
 
-    rows = []
-    for d in daily:
-        dayname, date_str = dayname_from_utc(d["dt"], tz_offset)
-        day_temp = round(d["temp"]["day"])
-        night_temp = round(d["temp"]["night"])
-        rows.append(
-            {
-                "day": dayname,
-                "date": date_str,
-                "day_temp": day_temp,
-                "night_temp": night_temp,
-            }
-        )
-    return rows
+        data = r.json()
+        forecast_list = data.get("list", [])
+        if not forecast_list:
+            return None
+
+        from collections import defaultdict
+
+        daily_data = defaultdict(list)
+
+        for item in forecast_list:
+            dt = datetime.fromtimestamp(item["dt"])
+            date_key = dt.date()
+            daily_data[date_key].append({"temp": item["main"]["temp"], "hour": dt.hour})
+
+        rows = []
+        for date_key in sorted(daily_data.keys())[:3]:
+            temps = daily_data[date_key]
+
+            # cari suhu siang (12:00-15:00) dan malam (21:00-03:00)
+            day_temps = [t["temp"] for t in temps if 12 <= t["hour"] <= 15]
+            night_temps = [
+                t["temp"] for t in temps if t["hour"] >= 21 or t["hour"] <= 3
+            ]
+
+            # jika tidak ada data spesifik, gunakan max/min dari hari itu
+            day_temp = (
+                round(max(day_temps))
+                if day_temps
+                else round(max(t["temp"] for t in temps))
+            )
+            night_temp = (
+                round(min(night_temps))
+                if night_temps
+                else round(min(t["temp"] for t in temps))
+            )
+
+            # nama hari dalam bahasa
+            dayname = ID_DAYS[date_key.weekday()]
+            date_str = date_key.strftime("%Y-%m-%d")
+
+            rows.append(
+                {
+                    "day": dayname,
+                    "date": date_str,
+                    "day_temp": day_temp,
+                    "night_temp": night_temp,
+                }
+            )
+
+        return rows
+
+    except Exception as e:
+        print(f"Weather API error: {e}")
+        return None
 
 
 # Routes
@@ -162,7 +196,7 @@ def index():
         weather = get_weather(city)
         if not weather:
             flash(
-                "Kota tidak ditemukan atau API error atau Halip26 masih mengembangkan fitur ini.",
+                "Kota tidak ditemukan atau terjadi error. Pastikan nama kota benar dan API key aktif.",
                 "warning",
             )
     today = datetime.utcnow()
@@ -173,7 +207,9 @@ def index():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        # Email: selalu disimpan dalam lowercase (case-insensitive)
         email = request.form.get("email", "").strip().lower()
+        # Username: disimpan sesuai input user (case-sensitive)
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
         confirm = request.form.get("confirm", "")
@@ -197,7 +233,7 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-        # Tandai bahwa akun baru dibuat agar sesi direset setelah login
+        # tandai bahwa akun baru dibuat agar sesi direset setelah login
         session["new_account"] = True
         flash("Registrasi berhasil, silakan login.", "success")
         return redirect(url_for("login"))
@@ -208,16 +244,24 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email", "").strip().lower()
+        email_or_username = request.form.get("email_or_username", "").strip()
         password = request.form.get("password", "")
-        user = User.query.filter_by(email=email).first()
+        
+        # Cek apakah input adalah email (mengandung @) atau username
+        if "@" in email_or_username:
+            # Login dengan email (CASE-INSENSITIVE: selalu lowercase)
+            user = User.query.filter_by(email=email_or_username.lower()).first()
+        else:
+            # Login dengan username (CASE-SENSITIVE: harus sesuai huruf besar/kecil)
+            user = User.query.filter_by(username=email_or_username).first()
+        
         if user and check_password_hash(user.password_hash, password):
             login_user(user, remember=True)
             # Jika akun baru tadi, reset sesi kuis lalu lanjut ke quiz
             if session.pop("new_account", False):
                 return redirect(url_for("quiz_reset"))
             return redirect(url_for("quiz"))
-        flash("Login gagal.", "danger")
+        flash("Login gagal. Periksa email/username dan password Anda.", "danger")
     return render_template("login.html")
 
 
@@ -244,7 +288,7 @@ def get_random_question():
 def quiz():
     ensure_quiz_session()
 
-    # Jika sudah 20 pertanyaan, langsung ke halaman hasil
+    # jika sudah 20 pertanyaan, langsung ke halaman hasil
     if session["quiz_count"] >= MAX_QUESTIONS:
         return redirect(url_for("quiz_finish"))
 
@@ -254,7 +298,7 @@ def quiz():
         opt = AnswerOption.query.get(chosen)
         is_correct = bool(opt and opt.is_correct)
 
-        # Catat jawaban di DB
+        # catat jawaban di DB
         ua = UserAnswer(
             user_id=current_user.id,
             question_id=qid,
@@ -263,12 +307,12 @@ def quiz():
         )
         db.session.add(ua)
 
-        # Update skor total user (leaderboard) dan skor sesi
+        # update skor total user (leaderboard) dan skor sesi
         if is_correct:
             current_user.total_score = (current_user.total_score or 0) + 1
             session["quiz_correct"] = session.get("quiz_correct", 0) + 1
 
-        # Update progres sesi (hindari duplikasi ID)
+        # update progres sesi (hindari duplikasi ID)
         ids = session.get("quiz_ids", [])
         if qid not in ids:
             ids.append(qid)
@@ -284,7 +328,7 @@ def quiz():
     # GET: tampilkan pertanyaan berikutnya
     q, options = get_random_question()
 
-    # Jika kehabisan soal sebelum 20 (mis. bank soal < 20), akhiri lebih cepat
+    # jika kehabisan soal sebelum 20 (mis. bank soal < 20), akhiri lebih cepat
     if not q:
         return redirect(url_for("quiz_finish"))
 
