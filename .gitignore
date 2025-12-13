@@ -40,7 +40,6 @@ databases/
 
 # Environment variables
 .env
-.env.*
 *.rar
 *.7z
 
