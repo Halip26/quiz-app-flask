@@ -7,16 +7,45 @@ Anda.{% endblock %} {% block content %}
 <div class="card">
   <form method="post">
     <label>Email (unik)</label>
-    <input type="text" name="email" required />
+    <input
+      type="email"
+      name="email"
+      placeholder="contoh: nama@email.com"
+      required
+    />
+    <small style="color: #888; font-size: 12px"
+      >Email doesn't care about upper/lower case letters</small
+    >
 
-    <label>Username (unik)</label>
-    <input type="text" name="username" required />
+    <label style="margin-top: 12px">Username (unik)</label>
+    <input
+      type="text"
+      name="username"
+      placeholder="contoh: JohnDoe123"
+      required
+    />
+    <small style="color: #ff9800; font-size: 12px">
+      ⚠️ Usernames are <strong>case sensitive</strong>. Remember this when
+      logging in!
+    </small>
 
-    <label>Password</label>
-    <input type="password" name="password" required />
+    <label style="margin-top: 12px">Password</label>
+    <input
+      type="password"
+      name="password"
+      placeholder="Minimal 6 karakter"
+      minlength="6"
+      required
+    />
 
     <label>Konfirmasi Password</label>
-    <input type="password" name="confirm" required />
+    <input
+      type="password"
+      name="confirm"
+      placeholder="Ketik ulang password"
+      minlength="6"
+      required
+    />
 
     <div style="height: 12px"></div>
     <button class="btn btn-primary" type="submit">Buat Akun</button>
