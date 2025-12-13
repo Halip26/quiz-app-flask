@@ -3,7 +3,7 @@ from app import db, Question, AnswerOption, app
 
 
 def add_q(t, opts, correct_idx):
-    # Hindari duplikasi berdasarkan teks pertanyaan
+    # hindari duplikasi berdasarkan teks pertanyaan
     existing = Question.query.filter_by(text=t).first()
     if existing:
         return
@@ -22,223 +22,223 @@ with app.app_context():
 
     # 1
     add_q(
-        "Apa yang dimaksud dengan 'AI Bias'?",
+        "Apa yang dimaksud dengan Computer Vision?",
         [
-            "Kesalahan teknis dalam kode",
-            "Prasangka yang tertanam dalam data dan model AI",
-            "Bug dalam algoritma",
-            "Masalah hardware",
+            "Kemampuan komputer untuk menghasilkan gambar",
+            "Kemampuan komputer untuk memahami dan menginterpretasi gambar",
+            "Software untuk mengedit foto",
+            "Hardware untuk menampilkan gambar",
         ],
         1,
     )
     # 2
     add_q(
-        "Prinsip etika apa yang paling penting dalam pengembangan AI?",
+        "Teknik apa yang digunakan untuk mendeteksi objek dalam gambar?",
         [
-            "Kecepatan pemrosesan",
-            "Transparansi dan akuntabilitas",
-            "Ukuran model",
-            "Jumlah parameter",
+            "Text Processing",
+            "Object Detection",
+            "Audio Analysis",
+            "Database Query",
         ],
         1,
     )
     # 3
     add_q(
-        "Bagaimana cara terbaik menangani data pribadi dalam sistem AI?",
+        "Apa fungsi dari Image Classification?",
         [
-            "Menyimpan semua data",
-            "Menerapkan prinsip privasi sejak desain",
-            "Membagikan ke publik",
-            "Mengabaikan masalah privasi",
+            "Menghapus gambar",
+            "Mengklasifikasikan gambar ke dalam kategori tertentu",
+            "Mengkompress gambar",
+            "Mengenkripsi gambar",
         ],
         1,
     )
     # 4
     add_q(
-        "Apa itu 'Explainable AI' (XAI)?",
+        "Algoritma apa yang sering digunakan dalam Computer Vision modern?",
         [
-            "AI yang cepat",
-            "AI yang bisa dijelaskan keputusannya",
-            "AI yang mahal",
-            "AI yang kompleks",
+            "Sorting Algorithm",
+            "Deep Learning dan Neural Networks",
+            "Binary Search",
+            "Quick Sort",
         ],
         1,
     )
     # 5
     add_q(
-        "Mengapa keberagaman tim pengembang AI penting?",
+        "Apa itu Image Segmentation?",
         [
-            "Tidak penting",
-            "Mengurangi bias dan meningkatkan perspektif",
-            "Meningkatkan profit",
-            "Formalitas saja",
+            "Menghapus sebagian gambar",
+            "Membagi gambar menjadi beberapa segmen untuk analisis",
+            "Memperbesar gambar",
+            "Mengubah format gambar",
         ],
         1,
     )
     # 6
     add_q(
-        "Apa tanggung jawab utama pengembang AI?",
+        "Teknologi apa yang digunakan untuk Face Recognition?",
         [
-            "Profit maksimal",
-            "Memastikan AI bermanfaat dan tidak merugikan",
-            "Kecepatan development",
-            "Mengikuti tren",
+            "GPS",
+            "Computer Vision dan Machine Learning",
+            "Bluetooth",
+            "Wi-Fi",
         ],
         1,
     )
     # 7
     add_q(
-        "Bagaimana AI seharusnya memperlakukan data anak-anak?",
+        "Apa aplikasi Computer Vision dalam dunia medis?",
         [
-            "Dengan perlindungan khusus",
-            "Sama seperti data lain",
-            "Mengabaikan",
-            "Mempublikasikan",
+            "Medical Imaging untuk diagnosis penyakit",
+            "Menghitung gaji dokter",
+            "Menyimpan data pasien",
+            "Membuat jadwal dokter",
         ],
         0,
     )
     # 8
     add_q(
-        "Apa itu 'AI Fairness'?",
+        "Apa itu OCR (Optical Character Recognition)?",
         [
-            "Keadilan dalam hasil AI untuk semua kelompok",
-            "Kecepatan AI",
-            "Harga AI",
-            "Ukuran model AI",
+            "Teknologi untuk membaca teks dari gambar",
+            "Software editing gambar",
+            "Hardware scanner",
+            "Format file gambar",
         ],
         0,
     )
     # 9
     add_q(
-        "Mengapa transparansi AI penting?",
+        "Convolutional Neural Network (CNN) sering digunakan untuk apa?",
         [
-            "Tidak penting",
-            "Membangun kepercayaan dan akuntabilitas",
-            "Meningkatkan kecepatan",
-            "Mengurangi biaya",
+            "Tidak digunakan dalam Computer Vision",
+            "Image recognition dan classification",
+            "Database management",
+            "Network security",
         ],
         1,
     )
     # 10
     add_q(
-        "Apa yang dimaksud dengan 'AI Safety'?",
+        "Apa itu Feature Extraction dalam Computer Vision?",
         [
-            "Memastikan AI aman dan terkendali",
-            "Keamanan server",
-            "Backup data",
-            "Kecepatan AI",
+            "Mengidentifikasi karakteristik penting dari gambar",
+            "Menghapus fitur dari gambar",
+            "Mengubah warna gambar",
+            "Memperkecil ukuran file",
         ],
         0,
     )
     # 11
     add_q(
-        "Bagaimana menangani kesalahan prediksi AI dalam konteks medis?",
+        "Autonomous Vehicles menggunakan Computer Vision untuk apa?",
         [
-            "Mengabaikan",
-            "Menerapkan review manusia dan protokol keamanan",
-            "Menyembunyikan",
-            "Menghapus data",
+            "Memutar musik",
+            "Mendeteksi objek di jalan dan navigasi",
+            "Menghitung BBM",
+            "Mengatur suhu kabin",
         ],
         1,
     )
     # 12
     add_q(
-        "Apa peran etika dalam pengembangan chatbot?",
+        "Apa itu Edge Detection dalam Image Processing?",
         [
-            "Tidak ada",
-            "Memastikan interaksi yang aman dan bertanggung jawab",
-            "Hanya estetika",
-            "Formalitas",
+            "Menghapus tepi gambar",
+            "Mengidentifikasi batas atau tepi objek dalam gambar",
+            "Membuat bingkai gambar",
+            "Mengubah resolusi gambar",
         ],
         1,
     )
     # 13
     add_q(
-        "Bagaimana menangani bias gender dalam AI?",
+        "Library Python apa yang populer untuk Computer Vision?",
         [
-            "Mengabaikan",
-            "Mengaudit dan memperbaiki dataset",
-            "Menyembunyikan",
-            "Tidak penting",
+            "Pandas",
+            "OpenCV",
+            "Django",
+            "Flask",
         ],
         1,
     )
     # 14
     add_q(
-        "Apa dampak sosial yang perlu dipertimbangkan dalam pengembangan AI?",
+        "Apa fungsi dari Image Preprocessing?",
         [
-            "Tidak ada",
-            "Dampak pada pekerjaan dan kesenjangan sosial",
-            "Hanya profit",
-            "Kecepatan saja",
+            "Menghapus gambar",
+            "Meningkatkan kualitas gambar sebelum analisis",
+            "Menyimpan gambar",
+            "Mengirim gambar",
         ],
         1,
     )
     # 15
     add_q(
-        "Bagaimana menyeimbangkan inovasi AI dengan etika?",
+        "Apa itu Augmented Reality (AR)?",
         [
-            "Fokus profit saja",
-            "Menerapkan framework etika dalam setiap tahap pengembangan",
-            "Mengabaikan etika",
-            "Fokus kecepatan",
+            "Menghapus objek dari dunia nyata",
+            "Menambahkan informasi digital ke dunia nyata melalui kamera",
+            "Membuat dunia virtual sepenuhnya",
+            "Mengedit foto",
         ],
         1,
     )
     # 16
     add_q(
-        "Apa itu 'AI Governance'?",
+        "Apa peran Computer Vision dalam sistem keamanan?",
         [
-            "Tidak penting",
-            "Kerangka kerja untuk mengatur pengembangan AI yang bertanggung jawab",
-            "Kecepatan AI",
-            "Harga AI",
+            "Tidak ada peran",
+            "Pengenalan wajah dan deteksi aktivitas mencurigakan",
+            "Mengganti password",
+            "Mengenkripsi data",
         ],
         1,
     )
     # 17
     add_q(
-        "Bagaimana melindungi privasi dalam sistem pengenalan wajah?",
+        "Apa itu Image Filtering?",
         [
-            "Mengabaikan",
-            "Menerapkan consent dan enkripsi data",
-            "Menyimpan semua data",
-            "Membagi data",
+            "Menghapus gambar",
+            "Memodifikasi gambar untuk meningkatkan fitur tertentu",
+            "Menyimpan gambar",
+            "Mengirim gambar via email",
         ],
         1,
     )
     # 18
     add_q(
-        "Apa tanggung jawab AI terhadap lingkungan?",
+        "YOLO (You Only Look Once) adalah algoritma untuk apa?",
         [
-            "Tidak ada",
-            "Efisiensi energi dan keberlanjutan",
-            "Hanya profit",
-            "Kecepatan saja",
+            "Editing video",
+            "Real-time object detection",
+            "Audio processing",
+            "Text generation",
         ],
         1,
     )
     # 19
     add_q(
-        "Bagaimana menangani dilema etis dalam keputusan AI?",
+        "Apa kegunaan Computer Vision dalam industri manufaktur?",
         [
-            "Framework etika dan review manusia",
-            "Mengabaikan",
-            "Otomatis saja",
-            "Tidak penting",
+            "Quality control dan deteksi cacat produk",
+            "Menghitung gaji karyawan",
+            "Membuat laporan keuangan",
+            "Mengatur jadwal produksi",
         ],
         0,
     )
     # 20
     add_q(
-        "Apa peran transparansi dalam AI medis?",
+        "Apa perbedaan antara Image Classification dan Object Detection?",
         [
-            "Membangun kepercayaan dan keamanan pasien",
-            "Tidak penting",
-            "Formalitas saja",
-            "Mengabaikan",
+            "Classification mengkategorikan gambar, Detection melokalisasi objek",
+            "Tidak ada perbedaan",
+            "Classification lebih lambat",
+            "Detection tidak akurat",
         ],
         0,
     )
 
-print("Seeding completed: 20 ethical AI questions added if not already present.")
+print("Seeding completed: 20 computer vision questions added if not already present.")
