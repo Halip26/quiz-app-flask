@@ -191,7 +191,8 @@ label {
   font-size: 0.95rem;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   width: 100%;
   padding: 12px 12px;
   border-radius: 10px;
