@@ -29,7 +29,7 @@ A friendly Flask web app featuring a quiz on "Computer Vision / Visi Komputer," 
 ![Leaderboard](screenshots/ss-login.png)
 *Real-time leaderboard showing top performers*
 
-> **Note:** Screenshots will be added manually to the `screenshots/` directory.
+> **Note:** Screenshots added on `screenshots/` directory.
 
 ---
 
