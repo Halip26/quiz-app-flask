@@ -4,13 +4,13 @@ block page_subtitle %}Terima kasih sudah bermain!{% endblock %} {% block content
 <div class="card" style="text-align: center">
   <h3 style="margin-top: 0">Skor Akhir Sesi</h3>
   <p style="font-size: 18px; color: #b6c2d9">
-    Anda menjawab benar {{ attempt_correct }} dari {{ attempt_count }}
+    kamu menjawab benar {{ attempt_correct }} dari {{ attempt_count }}
     pertanyaan.
   </p>
 
   <div style="height: 10px"></div>
   <a class="btn btn-primary" href="{{ url_for('leaderboard') }}"
-    >Lihat Papan Peringkat</a
+    >Lihat Leaderboard</a
   >
   <a class="btn btn-ghost" href="{{ url_for('quiz_reset') }}">Main Lagi</a>
 </div>
