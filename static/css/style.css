@@ -542,7 +542,99 @@ footer {
   color: var(--muted);
 }
 
+/* Navbar Toggler */
+.navbar-toggler {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 101;
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler span {
+  width: 25px;
+  height: 3px;
+  background: var(--txt);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler.active span:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 7px);
+}
+
+.navbar-toggler.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-toggler.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Overlay for mobile menu */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000080;
+  z-index: 98;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
 /* Responsive */
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: flex;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 280px;
+    max-width: 80%;
+    background: linear-gradient(135deg, var(--bg2), var(--bg1));
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px 24px 24px;
+    gap: 8px;
+    z-index: 100;
+    box-shadow: -10px 0 30px #00000080;
+    transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-left: 1px solid var(--border);
+  }
+
+  .nav.active {
+    right: 0;
+  }
+
+  .nav a {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .navbar-inner {
+    padding: 12px 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .navbar-inner {
     padding: 12px;
@@ -556,6 +648,13 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
+    transition: none !important;
+  }
+  
+  .navbar-toggler,
+  .navbar-toggler span,
+  .nav,
+  .nav-overlay {
     transition: none !important;
   }
 }
