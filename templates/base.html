@@ -9,7 +9,10 @@
       name="description"
       content="Kuis Computer Vision - Uji pengetahuan Anda tentang Computer Vision dengan kuis interaktif."
     />
-    <meta name="keywords" content="kuis, computer vision, visi komputer, AI, pendidikan, interaktif" />
+    <meta
+      name="keywords"
+      content="kuis, computer vision, visi komputer, AI, pendidikan, interaktif"
+    />
     <meta name="author" content="Halipuddin" />
     <meta property="og:title" content="Kuis Computer Vision" />
     <meta
@@ -18,7 +21,7 @@
     />
     <meta
       property="og:image"
-      content="{{ url_for('static', filename='images/highlight.png') }}"
+      content="{{ url_for('static', filename='images/highlight.jpg') }}"
     />
     <meta property="og:url" content="{{ url_for('index', _external=True) }}" />
     <meta property="og:type" content="website" />
@@ -68,8 +71,15 @@
 
     <footer class="container" style="margin-top: 18px">
       <small
-        >Developed by Halipuddin • © {{ (today or none) and today.year or 2025
-        }}</small
+        >Developed by
+        <a
+          href="https://halip26.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Halipuddin</a
+        >
+        • © {{ (today or none) and today.year or 2025 }} All rights
+        reserved.</small
       >
     </footer>
   </body>
