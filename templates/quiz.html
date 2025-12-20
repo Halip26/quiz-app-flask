@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block page_title %}Kuis Computer Vision{% endblock %} {% block
-page_subtitle %}Skor total Anda: {{ total_score }}{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block page_title %}Computer Vision Quiz{% endblock
+%} {% block page_subtitle %}Skor total kamu: {{ total_score }}{% endblock %} {%
+block content %}
 <div class="card">
   <div class="progress-wrap">
     Soal ke {{ progress + 1 if progress < max_questions else max_questions }}
@@ -29,7 +29,7 @@ content %}
     <div style="height: 10px"></div>
     <button class="btn" type="submit">Kirim Jawaban</button>
     <a class="btn btn-ghost" href="{{ url_for('leaderboard') }}"
-      >Lihat Papan Peringkat</a
+      >Lihat Leaderboard</a
     >
   </form>
   {% else %}
