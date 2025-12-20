@@ -586,7 +586,7 @@ footer {
   background: #00000080;
   z-index: 98;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .nav-overlay.active {
@@ -615,7 +615,7 @@ footer {
     gap: 8px;
     z-index: 100;
     box-shadow: -10px 0 30px #00000080;
-    transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-left: 1px solid var(--border);
   }
 
