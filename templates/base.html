@@ -2,22 +2,22 @@
 <html lang="id">
   <head>
     <meta charset="utf-8" />
-    <title>Kuis Computer Vision</title>
+    <title>Computer Vision Quiz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Kuis Computer Vision - Uji pengetahuan Anda tentang Computer Vision dengan kuis interaktif."
+      content="Computer Vision Quiz - Uji pengetahuan kamu tentang Computer Vision dengan kuis interaktif."
     />
     <meta
       name="keywords"
       content="kuis, computer vision, visi komputer, AI, pendidikan, interaktif"
     />
     <meta name="author" content="Halipuddin" />
-    <meta property="og:title" content="Kuis Computer Vision" />
+    <meta property="og:title" content="Computer Vision Quiz" />
     <meta
       property="og:description"
-      content="Uji pengetahuan Anda tentang Computer Vision dengan kuis interaktif."
+      content="Uji pengetahuan kamu tentang Computer Vision dengan kuis interaktif."
     />
     <meta
       property="og:image"
@@ -41,7 +41,7 @@
   <body>
     <header class="navbar">
       <div class="navbar-inner">
-        <a class="brand" href="{{ url_for('index') }}">Kuis Computer Vision</a>
+        <a class="brand" href="{{ url_for('index') }}">Computer Vision Quiz</a>
         <button class="navbar-toggler" id="navbarToggler" aria-label="Toggle navigation">
           <span></span>
           <span></span>
@@ -50,7 +50,7 @@
         <nav class="nav" id="navMenu">
           <a href="{{ url_for('index') }}">Beranda</a>
           <a href="{{ url_for('quiz') }}">Kuis</a>
-          <a href="{{ url_for('leaderboard') }}">Papan Peringkat</a>
+          <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
           {% if current_user.is_authenticated %}
           <a href="{{ url_for('logout') }}">Logout</a>
           {% else %}
