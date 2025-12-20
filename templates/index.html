@@ -19,8 +19,35 @@
     <button class="btn btn-primary" type="submit">Lihat</button>
   </div>
 </form>
-<!-- Materi Computer Vision (baru) -->
-<div class="card reading">
+
+{% if weather %}
+<div style="height: 14px"></div>
+<div class="card-weather">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Hari</th>
+        <th>Tanggal</th>
+        <th>Suhu Siang (°C)</th>
+        <th>Suhu Malam (°C)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in weather %}
+      <tr>
+        <td>{{ row.day }}</td>
+        <td>{{ row.date }}</td>
+        <td>{{ row.day_temp }}</td>
+        <td>{{ row.night_temp }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<!-- Computer Vision material-->
+<div class="card-material reading">
   <h3 class="reading-title">Computer Vision / Visi Komputer</h3>
   <p class="reading-intro">
     Bagian ini membantu memahami konsep dasar Computer Vision, bagaimana
@@ -78,44 +105,28 @@
   </div>
 
   <details class="reading-acc">
-    <summary>Computer Vision 101 (Ringkas)</summary>
+    <summary>Computer Vision (Ringkasan)</summary>
     <div class="reading-acc-body">
       <p>
-        Computer Vision adalah cabang AI yang memungkinkan komputer untuk
-        memahami dan menginterpretasi informasi visual dari dunia sekitar,
-        seperti gambar dan video.
+        Computer Vision adalah cabang dari Artificial Intelligence (AI) yang
+        memungkinkan komputer untuk melihat, memahami, dan menginterpretasikan
+        informasi visual dari dunia nyata, seperti gambar dan video.
       </p>
       <p>
-        Teknologi ini menggunakan algoritma machine learning dan deep learning
-        untuk mengenali pola, objek, dan fitur dalam data visual, memungkinkan
-        aplikasi dari pengenalan wajah hingga kendaraan otonom.
+        Teknologi ini bekerja dengan memproses data visual menggunakan algoritma
+        machine learning dan deep learning untuk mengenali pola, objek, wajah,
+        teks, serta aktivitas tertentu.
+      </p>
+      <p>
+        Dalam penerapannya, Computer Vision digunakan pada berbagai bidang,
+        seperti pengenalan wajah, deteksi objek, kendaraan otonom, sistem
+        keamanan, analisis medis, hingga filter kamera dan augmented reality.
+      </p>
+      <p>
+        Dengan kemampuan ini, komputer tidak hanya dapat "melihat", tetapi juga
+        mengambil keputusan berdasarkan informasi visual yang diperolehnya.
       </p>
     </div>
   </details>
 </div>
-
-{% if weather %}
-<div style="height: 14px"></div>
-<div class="card">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Hari</th>
-        <th>Tanggal</th>
-        <th>Suhu Siang (°C)</th>
-        <th>Suhu Malam (°C)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for row in weather %}
-      <tr>
-        <td>{{ row.day }}</td>
-        <td>{{ row.date }}</td>
-        <td>{{ row.day_temp }}</td>
-        <td>{{ row.night_temp }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-{% endif %} {% endblock %}
+{% endblock %}
