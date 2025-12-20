@@ -42,7 +42,12 @@
     <header class="navbar">
       <div class="navbar-inner">
         <a class="brand" href="{{ url_for('index') }}">Kuis Computer Vision</a>
-        <nav class="nav">
+        <button class="navbar-toggler" id="navbarToggler" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav" id="navMenu">
           <a href="{{ url_for('index') }}">Beranda</a>
           <a href="{{ url_for('quiz') }}">Kuis</a>
           <a href="{{ url_for('leaderboard') }}">Papan Peringkat</a>
@@ -54,6 +59,7 @@
           {% endif %}
         </nav>
       </div>
+      <div class="nav-overlay" id="navOverlay"></div>
     </header>
 
     <main class="container">
@@ -82,5 +88,6 @@
         reserved.</small
       >
     </footer>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
   </body>
 </html>
