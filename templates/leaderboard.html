@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <div class="lb-container">
-  <h2 class="lb-title">Papan Peringkat</h2>
+  <h2 class="lb-title">Leaderboard:</h2>
 
   {% if users %} {# pastikan tidak membagi dengan nol #} {% set max_score =
   users|map(attribute='total_score')|max or 1 %}
