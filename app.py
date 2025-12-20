@@ -261,7 +261,7 @@ def login():
             if session.pop("new_account", False):
                 return redirect(url_for("quiz_reset"))
             return redirect(url_for("quiz"))
-        flash("Login gagal. Periksa email/username dan password Anda.", "danger")
+        flash("Login gagal. Periksa email/username dan password kamu.", "danger")
     return render_template("login.html")
 
 
@@ -269,7 +269,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("Anda telah logout.", "info")
+    flash("Kamu telah logout.", "info")
     return redirect(url_for("index"))
 
 
