@@ -6,7 +6,7 @@ A friendly Flask web app featuring a quiz on "Computer Vision / Visi Komputer," 
 
 ### Home Page
 
-![Home Page Preview](screenshots/ss-beranda.png)
+![Home Page Preview](screenshots/ss-newberanda.png)
 *Home page with Computer Vision learning materials and weather widget*
 
 ### Quiz Interface
