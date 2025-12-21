@@ -269,6 +269,10 @@ def login():
 @login_required
 def logout():
     logout_user()
+    # Clear quiz session data to prevent leakage to next user
+    session.pop("quiz_count", None)
+    session.pop("quiz_correct", None)
+    session.pop("quiz_ids", None)
     flash("Kamu telah logout.", "info")
     return redirect(url_for("index"))
 
@@ -291,6 +295,17 @@ def quiz():
     # jika sudah 20 pertanyaan, langsung ke halaman hasil
     if session["quiz_count"] >= MAX_QUESTIONS:
         return redirect(url_for("quiz_finish"))
+
+    # Cek leaderboard HANYA jika kuis baru dimulai (quiz_count == 0)
+    # Jika user sedang di tengah kuis (quiz_count > 0), jangan dialihkan.
+    if session["quiz_count"] == 0:
+        top_users = (
+            User.query.order_by(User.total_score.desc(), User.created_at.asc())
+            .limit(20)
+            .all()
+        )
+        if any(u.id == current_user.id for u in top_users) and (current_user.total_score or 0) > 0:
+            return redirect(url_for("quiz_finish"))
 
     if request.method == "POST":
         qid = int(request.form.get("question_id"))
@@ -347,9 +362,17 @@ def quiz():
 @app.route("/quiz/finish")
 @login_required
 def quiz_finish():
-    ensure_quiz_session()
-    attempt_correct = session.get("quiz_correct", 0)
-    attempt_count = session.get("quiz_count", 0)
+    # If there is an active session with progress, show that.
+    # Otherwise (e.g. redirected from start because already on leaderboard), show total score.
+    if session.get("quiz_count", 0) > 0:
+        attempt_correct = session.get("quiz_correct", 0)
+        attempt_count = session.get("quiz_count", 0)
+    else:
+        attempt_correct = current_user.total_score
+        attempt_count = MAX_QUESTIONS
+
+    ensure_quiz_session() # Re-ensure session (though we might not need it if we are done)
+    
     return render_template(
         "quiz_finished.html",
         attempt_correct=attempt_correct,
@@ -360,10 +383,27 @@ def quiz_finish():
 @app.route("/quiz/reset")
 @login_required
 def quiz_reset():
+    # Check if user is in leaderboard (top 20)
+    top_users = (
+        User.query.order_by(User.total_score.desc(), User.created_at.asc())
+        .limit(20)
+        .all()
+    )
+    
+    in_leaderboard = any(u.id == current_user.id for u in top_users) and (current_user.total_score or 0) > 0
+    
+    if in_leaderboard:
+        current_user.total_score = 0
+        db.session.commit()
+        flash("Skor leaderboard kamu direset untuk bermain kembali.", "warning")
+
     session.pop("quiz_count", None)
     session.pop("quiz_correct", None)
     session.pop("quiz_ids", None)
-    flash("Sesi kuis direset. Selamat bermain lagi!", "info")
+
+    if not in_leaderboard:
+         flash("Sesi kuis direset. Selamat bermain lagi!", "info")
+         
     return redirect(url_for("quiz"))
 
 
