@@ -1,8 +1,8 @@
 :root {
   --bg1: #0f1020;
   --bg2: #171836;
-  --acc: #7c3aed; /* purple */
-  --acc2: #00e5ff; /* cyan */
+  --acc: #7c3aed;
+  --acc2: #00e5ff;
   --txt: #e6e6f2;
   --muted: #a6a6c9;
   --good: #22c55e;
@@ -26,58 +26,54 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
   color: var(--txt);
+  /* gradient statis - TIDAK ANIMATED untuk mengurangi beban GPU */
   background: linear-gradient(120deg, var(--bg1), var(--bg2));
-  background-size: 200% 200%;
-  animation: gradientShift 18s ease infinite;
+  background-attachment: fixed;
+  /* hapus animation untuk performa yg lebih baik */
 }
 
-/* Animated background glow dots */
-body::before,
+/* glow effect yg lebih ringan aja - kureplace blur dgn shadow */
+body::before {
+  content: "";
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(124, 58, 237, 0.15),
+    transparent 70%
+  );
+  top: -100px;
+  left: -100px;
+  pointer-events: none;
+  z-index: -1;
+  /* hapus blur - lbh baik ganti dgn opacity gradient */
+}
 body::after {
   content: "";
   position: fixed;
-  width: 480px;
-  height: 480px;
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.35;
+  background: radial-gradient(
+    circle at 70% 60%,
+    rgba(0, 229, 255, 0.1),
+    transparent 70%
+  );
+  bottom: -100px;
+  right: -100px;
   pointer-events: none;
   z-index: -1;
 }
-body::before {
-  background: radial-gradient(circle at 30% 30%, var(--acc), transparent 60%);
-  top: -120px;
-  left: -120px;
-}
-body::after {
-  background: radial-gradient(circle at 70% 60%, var(--acc2), transparent 60%);
-  bottom: -120px;
-  right: -120px;
-}
 
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Navbar */
+/* navigation bar */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(10px);
-  background: linear-gradient(
-    180deg,
-    rgba(15, 16, 32, 0.75),
-    rgba(15, 16, 32, 0.35)
-  );
+  /* hapus backdrop-filter - ganti dgn solid semi-transparent sja */
+  background: rgba(15, 16, 32, 0.85);
   border-bottom: 1px solid var(--border);
 }
 .navbar-inner {
@@ -111,8 +107,15 @@ body::after {
   background: var(--glass);
   transform: translateY(-1px);
 }
+.user-name {
+  color: var(--acc2);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  pointer-events: none;
+}
 
-/* Layout */
+/* layout container */
 .container {
   max-width: 980px;
   margin: 24px auto;
@@ -565,7 +568,7 @@ footer small a:hover::before {
   h2,
   .lb-title,
   .reading-title,
-.reading-block,
+  .reading-block,
   .reading-acc {
     font-size: 17px;
   }
@@ -696,6 +699,9 @@ footer {
 
   .navbar-inner {
     padding: 12px 16px;
+  }
+  .user-name {
+    padding: 10px 0 10px 15px;
   }
 }
 @media (max-width: 640px) {
